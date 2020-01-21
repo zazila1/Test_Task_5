@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UIElements;
 
 public class MoveController : MonoBehaviour
 {
@@ -20,7 +19,6 @@ public class MoveController : MonoBehaviour
     {
         Moving();
         Rotating();
-
     }
 
     private void Moving()
