@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     
     void Awake()
     {
-        _CurrentWeapon = _Weapons[0];
+        _CurrentWeapon = _Weapons[1];
     }
 
     public void OnEnemyKilled(int reward)

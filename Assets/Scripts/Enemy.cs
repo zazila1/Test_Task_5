@@ -5,9 +5,11 @@ using UnityEngine.Events;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private int _Reward;
+    
     [SerializeField] private int _Health;
     public UnityAction<int> _OnEnemyDie;
+    private int _Reward;
+    
     // Словарь для кеширования
     private static Dictionary<string, Weapon> particlesAttacker = new Dictionary<string, Weapon>();
 
@@ -33,9 +35,11 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void Setup(PlayerController player)
+    public void Setup(PlayerController player, int reward)
     {
+        // настройка врага после спавна из пула
         _OnEnemyDie += player.OnEnemyKilled;
+        _Reward = reward;
     }
 
     void OnParticleCollision(GameObject attackerWeaponGameObject)

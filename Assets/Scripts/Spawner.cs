@@ -12,7 +12,9 @@ public class Spawner : MonoBehaviour
     [SerializeField] private EnemyPoolController _EnemyPool;
     [SerializeField] private float _SpawnEnemyOffset;
     [SerializeField] private LayerMask _CheckLayersForSpawn;
-    [SerializeField] private int _GeneratePointInCircleTrys = 999;
+
+    [SerializeField] private int _RewardForEnemy;
+    
     private Vector2 _EnemyColliderSize;
     private float _UnitColliderRadius;
     
@@ -75,7 +77,9 @@ public class Spawner : MonoBehaviour
             }
             else
             {
-                _EnemyPool.SpawnEnemy(randomSpawnPoint, _EnemysContainer.transform);
+                var enemy = _EnemyPool.SpawnEnemy(randomSpawnPoint, _EnemysContainer.transform);
+                enemy.Setup(_Player, _RewardForEnemy);
+                    
                 yield return new WaitForSeconds(Random.Range(0.01f, 0.011f));
             }
             
