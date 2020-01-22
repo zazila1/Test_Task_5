@@ -11,10 +11,14 @@ public class EnemyPoolController : MonoBehaviour
     private Queue<Enemy> _Pool = new Queue<Enemy>();
     private List<Enemy> _SpawnedEnemys = new List<Enemy>();
 
+    private BoxCollider2D _EnemyCollider;
+    
     public bool _PoolReady = false;
 
     void Start()
     {
+        _EnemyCollider  = _EnemyPrefab.GetComponent<BoxCollider2D>();;
+        
         FillPool(_InitPoolSize);
         _PoolReady = true;
     }
@@ -48,13 +52,15 @@ public class EnemyPoolController : MonoBehaviour
         var enemy = _Pool.Dequeue();
         Transform enemyTransform = enemy.transform;
         
-        Debug.Log(enemy.transform.parent.name);
+//        Debug.Log(enemy.transform.parent.name);
         enemyTransform.SetParent(parentTransform);
         enemyTransform.position = spawnPosition;
         //enemyTransform.localScale = Vector3.one;
         
         _SpawnedEnemys.Add(enemy);
-        Debug.Log(enemy.transform.parent.name);
+        
+        enemy.gameObject.layer = LayerMask.NameToLayer("Enemy");
+        //Debug.Log(enemy.transform.parent.name);
         return enemy;
     }
 
@@ -71,6 +77,11 @@ public class EnemyPoolController : MonoBehaviour
         // categoryItem.ShowCard(false);
         
         _Pool.Enqueue(enemy);
+    }
+
+    public Vector2 GetEnemyColliderSize()
+    {
+        return _EnemyCollider.size;
     }
    
 }

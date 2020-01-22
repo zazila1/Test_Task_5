@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     //[SerializeField] private Weapon _CurrentWeapon;
     
     private bool canShoot = true;
-    private float shootDelay = 0.1f;
+    private float shootDelay = 0.01f;
 
     
     void Start()

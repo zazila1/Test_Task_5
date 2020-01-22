@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Reward: 50
-  _Health: 50
+  _Health: 500
 --- !u!61 &8055465781338687745
 BoxCollider2D:
   m_ObjectHideFlags: 0
