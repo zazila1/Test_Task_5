@@ -1,34 +1,33 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem _ShootEffect;
-    [SerializeField] private int _Points = 0;
-
+    [SerializeField] private int _Score = 0;
 
     [SerializeField] private Weapon _CurrentWeapon;
     [SerializeField] private List<Weapon> _Weapons;
     
-    private bool canShoot = true;
-    private float shootDelay = 0.01f;
-
+    public Action<int> _OnScoreChanged;
     
-    
-    void Awake()
+    private void Awake()
     {
-        _CurrentWeapon = _Weapons[1];
+        _CurrentWeapon = _Weapons[0];
+    }
+
+    private void Start()
+    {
+        _OnScoreChanged?.Invoke(_Score);
     }
 
     public void OnEnemyKilled(int reward)
     {
-        _Points += reward;
+        _Score += reward;
+        _OnScoreChanged?.Invoke(_Score);
     }
-    
+
+
     private void Update()
     {
         if (Input.GetAxisRaw("Fire1") > 0)
@@ -44,21 +43,9 @@ public class PlayerController : MonoBehaviour
         {
             _CurrentWeapon = _Weapons[1] != null ? _Weapons[1] : _CurrentWeapon;
         }
-    }
-
-    private void Shoot()
-    {
-        if (canShoot)
+        if (Input.GetKey("3"))
         {
-            _ShootEffect.Play();
-            StartCoroutine(ShootingDelay(shootDelay));
-        }    
-    }
-
-    private IEnumerator ShootingDelay(float delay)
-    {
-        canShoot = false;
-        yield return new WaitForSeconds(delay);
-        canShoot = true;
+            _CurrentWeapon = _Weapons[2] != null ? _Weapons[2] : _CurrentWeapon;
+        }
     }
 }

@@ -46,8 +46,8 @@ public class Enemy : MonoBehaviour
         List<ParticleCollisionEvent> collisionEvents = new List<ParticleCollisionEvent>();
         int collisionCount = attackerWeaponGameObject.GetComponent<ParticleSystem>().GetCollisionEvents(gameObject, collisionEvents);
         
-        Debug.Log($"collisionEvents {collisionCount}");
-        Debug.Log($"list count = {collisionEvents.Count}");
+        //Debug.Log($"collisionEvents {collisionCount}");
+        //Debug.Log($"list count = {collisionEvents.Count}");
         
         if (attackerWeaponGameObject.CompareTag("PlayerWeapon"))
         {

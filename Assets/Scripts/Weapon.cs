@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Net;
-using System.Runtime.ExceptionServices;
+﻿using System.Collections;
 using UnityEngine;
 
-//[CreateAssetMenu(fileName = "New Weapon", menuName = "Weapon")]
 public class Weapon : MonoBehaviour
 {
     public string _Name;
