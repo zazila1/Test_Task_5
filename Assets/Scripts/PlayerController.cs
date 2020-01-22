@@ -1,23 +1,30 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private ParticleSystem _ShootEffect;
+    [SerializeField] private int _Points = 0;
 
-    private bool canShoot = true;
-
-    private float shootDelay = 0.1f;
+    //[SerializeField] private Weapon _CurrentWeapon;
     
-    // Start is called before the first frame update
+    private bool canShoot = true;
+    private float shootDelay = 0.1f;
+
+    
     void Start()
     {
-        
     }
 
-    // Update is called once per frame
+    public void OnEnemyKilled(int reward)
+    {
+        _Points += reward;
+    }
+    
     private void Update()
     {
         if (Input.GetAxisRaw("Fire1") > 0)

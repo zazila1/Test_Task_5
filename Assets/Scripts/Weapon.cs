@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Weapon", menuName = "Weapon")]
-public class Weapon : ScriptableObject
+//[CreateAssetMenu(fileName = "New Weapon", menuName = "Weapon")]
+public class Weapon : MonoBehaviour
 {
     public string _Name;
     public Sprite _Icon;
-    public ParticleSystem _ShootEffect;
+    [SerializeField] private int _Damage;
+
+    public int GetWeaponDamage()
+    {
+        return _Damage;
+    }
 }
