@@ -81,7 +81,14 @@ public class EnemyPoolController : MonoBehaviour
 
     public Vector2 GetEnemyColliderSize()
     {
-        return _EnemyCollider.size;
+        if(_EnemyCollider != null) // быстрый фикс для эксепшна при остановке плейрежима
+        {
+            return _EnemyCollider.size;
+        }
+        else
+        {
+            return Vector2.one;
+        }
     }
    
 }
