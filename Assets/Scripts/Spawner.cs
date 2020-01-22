@@ -28,6 +28,8 @@ public class Spawner : MonoBehaviour
     // Т.е. юнит при спавне будет целиком внутри радиуса спавнера
     private IEnumerator InfiniteSpawn()
     {
+        Collider2D[] overlapResults = new Collider2D[5];
+        
         _EnemyColliderSize = _EnemyPool.GetEnemyColliderSize();
         // Радиус коллайдера с доп офсетом для спавна
         _UnitColliderRadius = _SpawnEnemyOffset + (float)Math.Sqrt((Math.Pow(_EnemyColliderSize.x, 2) + (Math.Pow(_EnemyColliderSize.y, 2)))) / 2;
@@ -64,11 +66,19 @@ public class Spawner : MonoBehaviour
                 yield return null;
             }
 
-            _EnemyPool.SpawnEnemy(randomSpawnPoint, _EnemysContainer.transform);
-            
             //Debug.Log($"spawnerPosition = {spawnerPosition} // randomPoint = {randomSpawnPoint}");
-            //Debug.Log(Physics2D.OverlapCircle(randomSpawnPoint, _UnitColliderRadius, _CheckLayersForSpawn));
-            yield return new WaitForSeconds(Random.Range(0.01f, 0.011f));
+            
+            // Если в месте спавна есть объекты блокирующие спавн, то запускаем цикл опять
+            if (Physics2D.OverlapCircleNonAlloc(randomSpawnPoint, _UnitColliderRadius, overlapResults, _CheckLayersForSpawn) > 0)
+            {
+                yield return new WaitForSeconds(0.01f);
+            }
+            else
+            {
+                _EnemyPool.SpawnEnemy(randomSpawnPoint, _EnemysContainer.transform);
+                yield return new WaitForSeconds(Random.Range(0.01f, 0.011f));
+            }
+            
         }
     }
 
@@ -77,16 +87,6 @@ public class Spawner : MonoBehaviour
     {
         Vector2 circleCenter = transform.position;
 
-        if ((Math.Pow(point.x - circleCenter.x, 2) + (Math.Pow(point.y - circleCenter.y, 2)) <= (Math.Pow(_SpawnerRadius - unitRadius, 2))))
-        {
-            //Debug.Log("IsPointInsideSpawnerRadius true");
-            return true;
-            
-        }
-        else
-        {
-            //Debug.Log("IsPointInsideSpawnerRadius false");
-            return false;
-        }
+        return Math.Pow(point.x - circleCenter.x, 2) + (Math.Pow(point.y - circleCenter.y, 2)) <= (Math.Pow(_SpawnerRadius - unitRadius, 2));
     }
 }
