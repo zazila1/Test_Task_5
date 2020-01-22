@@ -10,14 +10,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private ParticleSystem _ShootEffect;
     [SerializeField] private int _Points = 0;
 
-    //[SerializeField] private Weapon _CurrentWeapon;
+
+    [SerializeField] private Weapon _CurrentWeapon;
+    [SerializeField] private List<Weapon> _Weapons;
     
     private bool canShoot = true;
     private float shootDelay = 0.01f;
 
     
-    void Start()
+    
+    void Awake()
     {
+        _CurrentWeapon = _Weapons[0];
     }
 
     public void OnEnemyKilled(int reward)
@@ -29,7 +33,16 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetAxisRaw("Fire1") > 0)
         {
-            Shoot();
+            _CurrentWeapon.Shoot();
+        }
+
+        if (Input.GetKey("1"))
+        {
+            _CurrentWeapon = _Weapons[0] != null ? _Weapons[0] : _CurrentWeapon;
+        }
+        if (Input.GetKey("2"))
+        {
+            _CurrentWeapon = _Weapons[1] != null ? _Weapons[1] : _CurrentWeapon;
         }
     }
 

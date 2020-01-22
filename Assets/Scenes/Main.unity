@@ -412,6 +412,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ShootEffect: {fileID: 670135065}
   _Points: 0
+  _CurrentWeapon: {fileID: 0}
+  _Weapons:
+  - {fileID: 1926490044}
+  - {fileID: 670135066}
 --- !u!1 &411373223
 GameObject:
   m_ObjectHideFlags: 0
@@ -671,7 +675,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -5384,9 +5388,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b17d02ac6d6a7cf4abdf9db01002dd89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Name: "\u041F\u0438\u0441\u0442\u043E\u043B\u0435\u0442"
+  _Name: "\u0421\u0443\u043F\u0435\u0440 \u0434\u0440\u043E\u0431\u043E\u0432\u0438\u043A"
   _Icon: {fileID: 0}
   _Damage: 20
+  shootDelay: 0.1
 --- !u!4 &731959726 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8055465781338687751, guid: 85db2ac261e7e5d498bf33ce202719b2,
@@ -23884,7 +23889,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1926490040
 Transform:
   m_ObjectHideFlags: 0
@@ -23978,7 +23983,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -24098,7 +24103,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 20
+      scalar: 25
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -24214,7 +24219,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.5
+      scalar: 1
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -28708,7 +28713,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Name: "\u041F\u0438\u0441\u0442\u043E\u043B\u0435\u0442"
   _Icon: {fileID: 0}
-  _Damage: 5
+  _Damage: 250
+  shootDelay: 0.3
 --- !u!1001 &1988548957
 PrefabInstance:
   m_ObjectHideFlags: 0
