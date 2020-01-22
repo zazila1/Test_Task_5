@@ -23,6 +23,7 @@ public class Spawner : MonoBehaviour
     
     private void Start()
     {
+        _EnemyColliderSize = _EnemyPool.GetEnemyColliderSize();
         StartCoroutine(InfiniteSpawn());
     }
 
@@ -32,7 +33,6 @@ public class Spawner : MonoBehaviour
     {
         Collider2D[] overlapResults = new Collider2D[5];
         
-        _EnemyColliderSize = _EnemyPool.GetEnemyColliderSize();
         // Радиус коллайдера с доп офсетом для спавна
         _UnitColliderRadius = _SpawnEnemyOffset + (float)Math.Sqrt((Math.Pow(_EnemyColliderSize.x, 2) + (Math.Pow(_EnemyColliderSize.y, 2)))) / 2;
         
@@ -42,19 +42,17 @@ public class Spawner : MonoBehaviour
             yield return null;
         }
         
+        // Основной цикл спавнера
         while (true) 
         {
             Vector3 spawnerPosition = transform.position;
-
-            Vector2 randomSpawnPoint = Vector2.zero;
+            Vector2 randomSpawnPoint;
+            
             // Т.к. точки генерируются в квадрате в который вписан круг с радиусом спавнера,
             // то нужно проверять не сгенерировалась ли точка за радиусом
             // Пробуем сгенерировать по разу за кадр пока не заспавним нужную точку
             while (true)
             {
-                // Радиус спавна с учетом радиуса юнита (что бы юнит не спавнился частью за радиусом спавнера)
-                float finalSpawnerRadius = _SpawnerRadius - _UnitColliderRadius;
-                
                 float randomX = Random.Range(spawnerPosition.x - _SpawnerRadius, spawnerPosition.x + _SpawnerRadius);
                 float randomY = Random.Range(spawnerPosition.y - _SpawnerRadius, spawnerPosition.y + _SpawnerRadius);
                 randomSpawnPoint = new Vector2(randomX, randomY);
@@ -67,8 +65,6 @@ public class Spawner : MonoBehaviour
                 
                 yield return null;
             }
-
-            //Debug.Log($"spawnerPosition = {spawnerPosition} // randomPoint = {randomSpawnPoint}");
             
             // Если в месте спавна есть объекты блокирующие спавн, то запускаем цикл опять
             if (Physics2D.OverlapCircleNonAlloc(randomSpawnPoint, _UnitColliderRadius, overlapResults, _CheckLayersForSpawn) > 0)
@@ -77,8 +73,14 @@ public class Spawner : MonoBehaviour
             }
             else
             {
-                var enemy = _EnemyPool.SpawnEnemy(randomSpawnPoint, _EnemysContainer.transform);
-                enemy.Setup(_Player, _RewardForEnemy);
+                // Достаем из пула врага и инициализируем его данные с нуля
+                Enemy enemy = _EnemyPool.SpawnEnemy(randomSpawnPoint, _EnemysContainer.transform);
+                
+                enemy.Setup((reward =>
+                {
+                    _Player.OnEnemyKilled(reward);
+                    _EnemyPool.RemoveEnemy(enemy); 
+                }));
                     
                 yield return new WaitForSeconds(Random.Range(0.01f, 0.011f));
             }
@@ -90,7 +92,7 @@ public class Spawner : MonoBehaviour
     private bool IsPointInsideSpawnerRadius(Vector2 point, float unitRadius)
     {
         Vector2 circleCenter = transform.position;
-
+        // Проверяется радиус спавна с учетом радиуса юнита (что бы юнит не спавнился частью за радиусом спавнера)
         return Math.Pow(point.x - circleCenter.x, 2) + (Math.Pow(point.y - circleCenter.y, 2)) <= (Math.Pow(_SpawnerRadius - unitRadius, 2));
     }
 }

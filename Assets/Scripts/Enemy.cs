@@ -7,8 +7,9 @@ public class Enemy : MonoBehaviour
 {
     
     [SerializeField] private int _Health;
-    public UnityAction<int> _OnEnemyDie;
-    private int _Reward;
+    [SerializeField] private int _MaxHealth;
+    [SerializeField] private int _Reward;
+    private Action<int> _OnEnemyDie;
     
     // Словарь для кеширования
     private static Dictionary<string, Weapon> particlesAttacker = new Dictionary<string, Weapon>();
@@ -20,30 +21,33 @@ public class Enemy : MonoBehaviour
     private void Die()
     {
         _OnEnemyDie?.Invoke(_Reward);
-        
-        Destroy(gameObject);
     }
 
     void Damage(int damage)
     {
         _Health -= damage;
 
-        //Debug.Log(_Health);
         if (_Health <= 0)
         {
             Die();
         }
     }
 
-    public void Setup(PlayerController player, int reward)
+    public void Setup(Action<int> dieAction)
     {
         // настройка врага после спавна из пула
-        _OnEnemyDie += player.OnEnemyKilled;
-        _Reward = reward;
+        _Health = _MaxHealth;
+        _OnEnemyDie = dieAction;
     }
 
+    //ParticlePhysicsExtensions.GetCollisionEvents();
     void OnParticleCollision(GameObject attackerWeaponGameObject)
     {
+        List<ParticleCollisionEvent> collisionEvents = new List<ParticleCollisionEvent>();
+        int collisionCount = attackerWeaponGameObject.GetComponent<ParticleSystem>().GetCollisionEvents(gameObject, collisionEvents);
+        
+        Debug.Log($"collisionEvents {collisionCount}");
+        Debug.Log($"list count = {collisionEvents.Count}");
         
         if (attackerWeaponGameObject.CompareTag("PlayerWeapon"))
         {
@@ -51,7 +55,7 @@ public class Enemy : MonoBehaviour
             if (particlesAttacker.ContainsKey(attackerWeaponGameObject.name))
             {
                 // Если попадание таким партиклом уже было, то забираем актуальный урон
-                Damage(particlesAttacker[attackerWeaponGameObject.name].GetWeaponDamage());
+                Damage(particlesAttacker[attackerWeaponGameObject.name].GetWeaponDamage() * collisionCount);
             }
             else
             {

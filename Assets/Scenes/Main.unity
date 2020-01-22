@@ -5374,7 +5374,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Name: "\u0421\u0443\u043F\u0435\u0440 \u0434\u0440\u043E\u0431\u043E\u0432\u0438\u043A"
   _Icon: {fileID: 0}
-  _Damage: 20
+  _Damage: 10
   shootDelay: 0.1
 --- !u!1 &931336847
 GameObject:

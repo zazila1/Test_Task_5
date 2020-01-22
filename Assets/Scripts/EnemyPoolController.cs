@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,14 +12,17 @@ public class EnemyPoolController : MonoBehaviour
     private Queue<Enemy> _Pool = new Queue<Enemy>();
     private List<Enemy> _SpawnedEnemys = new List<Enemy>();
 
-    private BoxCollider2D _EnemyCollider;
-    
+    //private BoxCollider2D _EnemyCollider;
+    private Vector2 _EnemyColliderSize;
     public bool _PoolReady = false;
+
+    private void Awake()
+    {
+        _EnemyColliderSize  = _EnemyPrefab.GetComponent<BoxCollider2D>().size;
+    }
 
     void Start()
     {
-        _EnemyCollider  = _EnemyPrefab.GetComponent<BoxCollider2D>();;
-        
         FillPool(_InitPoolSize);
         _PoolReady = true;
     }
@@ -33,8 +37,6 @@ public class EnemyPoolController : MonoBehaviour
 
             enemyGameObject.layer = LayerMask.NameToLayer("Hided");
             
-            //card.WipeCardData();
-            //card.ShowCard(false);
             _Pool.Enqueue(enemy);
         }
     }
@@ -52,15 +54,12 @@ public class EnemyPoolController : MonoBehaviour
         var enemy = _Pool.Dequeue();
         Transform enemyTransform = enemy.transform;
         
-//        Debug.Log(enemy.transform.parent.name);
         enemyTransform.SetParent(parentTransform);
         enemyTransform.position = spawnPosition;
-        //enemyTransform.localScale = Vector3.one;
         
         _SpawnedEnemys.Add(enemy);
         
         enemy.gameObject.layer = LayerMask.NameToLayer("Enemy");
-        //Debug.Log(enemy.transform.parent.name);
         return enemy;
     }
 
@@ -73,22 +72,13 @@ public class EnemyPoolController : MonoBehaviour
         itemTransform.position = transform.position;
         
         enemy.gameObject.layer = LayerMask.NameToLayer("Hided");
-        // categoryItem.WipeItemData();
-        // categoryItem.ShowCard(false);
         
         _Pool.Enqueue(enemy);
     }
 
     public Vector2 GetEnemyColliderSize()
     {
-        if(_EnemyCollider != null) // быстрый фикс для эксепшна при остановке плейрежима
-        {
-            return _EnemyCollider.size;
-        }
-        else
-        {
-            return Vector2.one;
-        }
+        return _EnemyColliderSize;
     }
    
 }
