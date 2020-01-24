@@ -12,7 +12,7 @@
 
 ## Комментарии по реализации:
 
-<a href="https://wmpics.pics/pm-Z31D.html"><img src="https://wmpics.pics/dm-Z31D.mp4"/></a>
+<a href="https://yapx.ru/v/GNzGn"><img src="https://i.yapx.ru/GNzGn.gif" alt="Хостинг картинок yapx.ru"></a>
 
 1) Управление: WASD или стрелочки для движения, цифры 1,2,3 - для смены оружия (3 вида оружия), левая кнопка мыши, контрол или тап для стрельбы.
  
