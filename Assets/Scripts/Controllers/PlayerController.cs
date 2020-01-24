@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     
     private void Awake()
     {
+        Application.targetFrameRate = 180;
         _CurrentWeapon = _Weapons[0];
     }
 
