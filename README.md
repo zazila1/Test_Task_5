@@ -12,7 +12,7 @@
 
 ## Комментарии по реализации:
 
-![dsf](https://media.giphy.com/media/SwsqJYxA9QNgNnR8Ws/giphy.gif)
+<img src="https://media.giphy.com/media/SwsqJYxA9QNgNnR8Ws/giphy.gif"/>
 
 1) Управление: WASD или стрелочки для движения, цифры 1,2,3 - для смены оружия (3 вида оружия), левая кнопка мыши, контрол или тап для стрельбы.
  
