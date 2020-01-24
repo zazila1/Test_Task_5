@@ -12,7 +12,7 @@
 
 ## Комментарии по реализации:
 
-<a href="https://yapx.ru/v/GNzGn"><img src="https://i.yapx.ru/GNzGn.gif" alt="Хостинг картинок yapx.ru"></a>
+<a href="https://yapx.ru/v/GNzGn" title="GIF-изображение загружено на фотохостинг yapx.ru"><img src="https://i.yapx.ru/GNzGn.gif" alt="Хостинг картинок yapx.ru"></a>
 
 1) Управление: WASD или стрелочки для движения, цифры 1,2,3 - для смены оружия (3 вида оружия), левая кнопка мыши, контрол или тап для стрельбы.
  
