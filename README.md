@@ -12,8 +12,8 @@
 
 ## Комментарии по реализации:
 
-<img src="https://i.yapx.ru/GNzJ6.gif">
-![]("https://i.yapx.ru/GNzJ6.gif")
+<a href="https://yapx.ru/v/GNzJ6" title="GIF"><img src="https://i.yapx.ru/GNzJ6.gif"></a>
+
 
 1) Управление: WASD или стрелочки для движения, цифры 1,2,3 - для смены оружия (3 вида оружия), левая кнопка мыши, контрол или тап для стрельбы.
  
