@@ -923,8 +923,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Player: {fileID: 375017001}
-  _K_position: 0.01
-  viewOffset: 0.05
+  _K_position: 0.008
+  viewOffset: 0.045
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
