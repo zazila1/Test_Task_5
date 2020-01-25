@@ -12,7 +12,7 @@ public class CameraController : MonoBehaviour
     private Vector3 _PrevPos = Vector3.zero;
     private Vector3 _PrevOffset = Vector3.zero;
 
-    private Vector3 _Cd;
+    private Vector3 _ViewOffset;
     private void Awake()
     {
         _Camera = Camera.main;
@@ -22,17 +22,29 @@ public class CameraController : MonoBehaviour
 
     void LateUpdate()
     {
-        MoveCameraToPlayer(_Player.transform.position);
+        MoveCameraToPlayer(_Player.transform.position, _ViewOffset);
     }
 
     private void FixedUpdate()
     {
-        //CalculateNewCameraPosition();
+        
+        _ViewOffset = CalculateViewOffset();
     }
 
-    private void MoveCameraToPlayer(Vector3 playerPosition)
+    private Vector3 CalculateViewOffset()
+    {
+        Vector3 viewOffset = _Player.transform.up * _ViewOffsetRange;
+        Vector3 newViewOffset = _PrevOffset * (1f - _K_offset) + viewOffset * _K_offset;
+        _PrevOffset = newViewOffset;
+
+        return newViewOffset;
+    }
+
+
+    private void MoveCameraToPlayer(Vector3 playerPosition, Vector3 viewOffset)
     {
         // Наработки на будущее. Нужно сделать смещение камеры в зависимости от растояния до прицела
+        // + сделать
         
         //Vector3 mousePosition = _Camera.ScreenToWorldPoint(Input.mousePosition);
         // Vector3 mousePosition = Input.mousePosition;
@@ -47,12 +59,10 @@ public class CameraController : MonoBehaviour
         //
         // viewOffset = _Camera.ScreenToWorldPoint(viewOffset);
         
-        Vector3 viewOffset = _Player.transform.up * _ViewOffsetRange;
-        Vector3 newViewOffset = _PrevOffset * (1f - _K_offset) + viewOffset * _K_offset;
-        _PrevOffset = newViewOffset;
+       
         
-        Vector3 newPos = _PrevPos * (1f - _K_position) + playerPosition * _K_position;
-        _PrevPos = newPos + newViewOffset;
+        Vector3 newPos = _PrevPos * (1f - _K_position) + (playerPosition + viewOffset) * _K_position;
+        _PrevPos = newPos/* + viewOffset*/;
 
         Vector3 camPosition = new Vector3(newPos.x, newPos.y, _CamTransform.position.z);
         _CamTransform.position = camPosition;
