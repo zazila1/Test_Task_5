@@ -12,6 +12,7 @@
 
 ## Комментарии по реализации:
 
+<a href="dipa.digital/test5/">= Поиграть в WebGL версию =</a>
 <a href="https://yapx.ru/v/GNzJ6">= GIF =</a>
 
 
