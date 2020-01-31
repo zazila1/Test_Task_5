@@ -34,11 +34,20 @@ public class MoveController : MonoBehaviour
     
     private void Rotating()
     {
-        Vector3 mousePosition = _Camera.ScreenToWorldPoint(Input.mousePosition);
-        Quaternion rotation = Quaternion.LookRotation(_PlayerTransform.position - mousePosition, Vector3.forward);
-        
-        _PlayerTransform.rotation = rotation;  
-        _PlayerTransform.eulerAngles = new Vector3(0, 0,_PlayerTransform.eulerAngles.z);
+        // Vector3 mousePosition = _Camera.ScreenToWorldPoint(Input.mousePosition);
+        // Debug.Log(_PlayerTransform.position + " /// " + mousePosition);
+        //
+        // Vector3 viewVector = _PlayerTransform.position - mousePosition;
+        // Quaternion rotation = Quaternion.LookRotation(viewVector, _PlayerTransform.forward);
+        //
+        // _PlayerTransform.rotation = rotation;  
+        // _PlayerTransform.eulerAngles = new Vector3(0, 0,_PlayerTransform.eulerAngles.z);
+
+        var viewDir = Input.mousePosition - _Camera.WorldToScreenPoint(_PlayerTransform.position);
+
+        var angle = Mathf.Atan2(viewDir.y, viewDir.x) * Mathf.Rad2Deg;
+
+        var quaternion = Quaternion.AngleAxis(angle, _PlayerTransform.forward);
 
         //Debug.Log($"mousePosition = {Input.mousePosition} // mousePosition.word = {mousePosition} ");
     }
